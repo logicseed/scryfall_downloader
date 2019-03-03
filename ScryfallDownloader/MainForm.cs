@@ -12,7 +12,8 @@ namespace ScryfallDownloader
     {
         private string ImageDirectory { get; set; }
         private string JsonFileName { get; set; }
-        private List<CardDTO> CardDTOs { get; set; }
+
+        private List<Card> Cards { get; set; }
         private int DownloadCount { get; set; }
 
         public MainForm()
@@ -33,7 +34,7 @@ namespace ScryfallDownloader
 
         private void LoadCardsButton_Click(object sender, EventArgs e)
         {
-            CardDTOs = new List<CardDTO>();
+            Cards = new List<Card>();
 
             var openFileDialog = new OpenFileDialog();
             if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -72,11 +73,11 @@ namespace ScryfallDownloader
                 {
                     if (reader.TokenType == JsonToken.StartObject)
                     {
-                        var card = serializer.Deserialize<CardDTO>(reader);
-                        CardDTOs.Add(card);
+                        var cardDTO = serializer.Deserialize<CardDTO>(reader);
+                        Cards.Add(new Card(cardDTO));
                     }
 
-                    if (CardDTOs.Count % 21 == 0) Thread.Sleep(1);
+                    if (Cards.Count % 21 == 0) Thread.Sleep(1);
                     parseBackgroundWorker.ReportProgress(0);
                 }
             }
@@ -84,7 +85,7 @@ namespace ScryfallDownloader
 
         private void ParseBackgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            loadedCardsLabel.Text = $"{CardDTOs.Count} cards loaded..";
+            loadedCardsLabel.Text = $"{Cards.Count} cards loaded..";
         }
 
         private void ParseBackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -94,6 +95,25 @@ namespace ScryfallDownloader
 
         private void DownloadBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
+            foreach (var card in Cards)
+            {
+                // Determine directory
+                // Does directory exist?
+                    // No
+                        // Create directory
+
+                // Does it have faces?
+                    // Yes
+                        // For each face
+                            // Determine filename
+                            // Download image
+                    // No
+                        // Determine filename
+                        // Downlaod image
+                // Increment download count
+                // Report progress
+            }
+
             for (int i = 0; i < 100; i++)
             {
                 if (downloadBackgroundWorker.CancellationPending) break;
@@ -109,7 +129,7 @@ namespace ScryfallDownloader
 
         private void DownloadBackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if (DownloadCount != CardDTOs.Count)
+            if (DownloadCount != Cards.Count)
             {
                 downloadProgressBar.Value = 0;
                 MessageBox.Show("Your image download was cancelled.", "Download Cancelled", MessageBoxButtons.OK);
@@ -119,7 +139,5 @@ namespace ScryfallDownloader
                 MessageBox.Show("Your image download is complete.", "Download Complete", MessageBoxButtons.OK);
             }
         }
-
-        
     }
 }

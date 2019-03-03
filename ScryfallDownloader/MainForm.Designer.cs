@@ -41,7 +41,6 @@
             // 
             // loadCardsButton
             // 
-            this.loadCardsButton.Enabled = false;
             this.loadCardsButton.Location = new System.Drawing.Point(12, 45);
             this.loadCardsButton.Name = "loadCardsButton";
             this.loadCardsButton.Size = new System.Drawing.Size(112, 23);
