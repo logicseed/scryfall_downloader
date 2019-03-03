@@ -36,6 +36,7 @@
             this.parseBackgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.imageDirectoryButton = new System.Windows.Forms.Button();
             this.imageDirectoryLabel = new System.Windows.Forms.Label();
+            this.cancelDownloadButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // loadCardsButton
@@ -110,11 +111,23 @@
             this.imageDirectoryLabel.TabIndex = 5;
             this.imageDirectoryLabel.Text = "No image folder chosen..";
             // 
+            // cancelDownloadButton
+            // 
+            this.cancelDownloadButton.Enabled = false;
+            this.cancelDownloadButton.Location = new System.Drawing.Point(418, 75);
+            this.cancelDownloadButton.Name = "cancelDownloadButton";
+            this.cancelDownloadButton.Size = new System.Drawing.Size(112, 23);
+            this.cancelDownloadButton.TabIndex = 6;
+            this.cancelDownloadButton.Text = "Cancel Download";
+            this.cancelDownloadButton.UseVisualStyleBackColor = true;
+            this.cancelDownloadButton.Click += new System.EventHandler(this.CancelDownloadButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(542, 141);
+            this.Controls.Add(this.cancelDownloadButton);
             this.Controls.Add(this.imageDirectoryLabel);
             this.Controls.Add(this.imageDirectoryButton);
             this.Controls.Add(this.downloadProgressBar);
@@ -141,6 +154,7 @@
         private System.ComponentModel.BackgroundWorker parseBackgroundWorker;
         private System.Windows.Forms.Button imageDirectoryButton;
         private System.Windows.Forms.Label imageDirectoryLabel;
+        private System.Windows.Forms.Button cancelDownloadButton;
     }
 }
 
