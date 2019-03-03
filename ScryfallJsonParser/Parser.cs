@@ -9,7 +9,29 @@ namespace ScryfallJsonParser
     {
         public List<CardDTO> Cards { get; private set; }
 
-        public async Task ParseCards(string file)
+        public void ParseCards(string file)
+        {
+            Cards = new List<CardDTO>();
+
+            using (var stream = new StreamReader(file))
+            using (var reader = new JsonTextReader(stream))
+            {
+                // TODO: implement progress indicator
+                var serializer = new JsonSerializer();
+                while (reader.Read())
+                {
+                    if (reader.TokenType == JsonToken.StartObject)
+                    {
+                        var card = serializer.Deserialize<CardDTO>(reader);
+                        Cards.Add(card);
+                    }
+                }
+            }
+
+            return;
+        }
+
+        public async Task ParseCardsAsync(string file)
         {
             Cards = new List<CardDTO>();
 
