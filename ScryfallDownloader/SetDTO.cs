@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace ScryfallJsonParser
+namespace ScryfallDownloader
 {
     // https://scryfall.com/docs/api/sets
     public class SetDTO

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace ScryfallJsonParser
+namespace ScryfallDownloader
 {
     // https://scryfall.com/docs/api/cards#card-face-objects
     public class CardFaceDTO

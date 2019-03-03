@@ -32,11 +32,16 @@
             this.downloadCardsButton = new System.Windows.Forms.Button();
             this.loadedCardsLabel = new System.Windows.Forms.Label();
             this.downloadProgressBar = new System.Windows.Forms.ProgressBar();
+            this.downloadBackgroundWorker = new System.ComponentModel.BackgroundWorker();
+            this.parseBackgroundWorker = new System.ComponentModel.BackgroundWorker();
+            this.imageDirectoryButton = new System.Windows.Forms.Button();
+            this.imageDirectoryLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // loadCardsButton
             // 
-            this.loadCardsButton.Location = new System.Drawing.Point(12, 12);
+            this.loadCardsButton.Enabled = false;
+            this.loadCardsButton.Location = new System.Drawing.Point(12, 45);
             this.loadCardsButton.Name = "loadCardsButton";
             this.loadCardsButton.Size = new System.Drawing.Size(112, 23);
             this.loadCardsButton.TabIndex = 0;
@@ -46,7 +51,8 @@
             // 
             // downloadCardsButton
             // 
-            this.downloadCardsButton.Location = new System.Drawing.Point(12, 42);
+            this.downloadCardsButton.Enabled = false;
+            this.downloadCardsButton.Location = new System.Drawing.Point(12, 75);
             this.downloadCardsButton.Name = "downloadCardsButton";
             this.downloadCardsButton.Size = new System.Drawing.Size(112, 23);
             this.downloadCardsButton.TabIndex = 1;
@@ -57,7 +63,7 @@
             // loadedCardsLabel
             // 
             this.loadedCardsLabel.AutoSize = true;
-            this.loadedCardsLabel.Location = new System.Drawing.Point(130, 17);
+            this.loadedCardsLabel.Location = new System.Drawing.Point(130, 50);
             this.loadedCardsLabel.Name = "loadedCardsLabel";
             this.loadedCardsLabel.Size = new System.Drawing.Size(88, 13);
             this.loadedCardsLabel.TabIndex = 2;
@@ -65,16 +71,52 @@
             // 
             // downloadProgressBar
             // 
-            this.downloadProgressBar.Location = new System.Drawing.Point(12, 72);
+            this.downloadProgressBar.Location = new System.Drawing.Point(12, 105);
             this.downloadProgressBar.Name = "downloadProgressBar";
-            this.downloadProgressBar.Size = new System.Drawing.Size(228, 23);
+            this.downloadProgressBar.Size = new System.Drawing.Size(518, 23);
             this.downloadProgressBar.TabIndex = 3;
+            // 
+            // downloadBackgroundWorker
+            // 
+            this.downloadBackgroundWorker.WorkerReportsProgress = true;
+            this.downloadBackgroundWorker.WorkerSupportsCancellation = true;
+            this.downloadBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.DownloadBackgroundWorker_DoWork);
+            this.downloadBackgroundWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.DownloadBackgroundWorker_ProgressChanged);
+            this.downloadBackgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.DownloadBackgroundWorker_RunWorkerCompleted);
+            // 
+            // parseBackgroundWorker
+            // 
+            this.parseBackgroundWorker.WorkerReportsProgress = true;
+            this.parseBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.ParseBackgroundWorker_DoWork);
+            this.parseBackgroundWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.ParseBackgroundWorker_ProgressChanged);
+            this.parseBackgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.ParseBackgroundWorker_RunWorkerCompleted);
+            // 
+            // imageDirectoryButton
+            // 
+            this.imageDirectoryButton.Location = new System.Drawing.Point(12, 16);
+            this.imageDirectoryButton.Name = "imageDirectoryButton";
+            this.imageDirectoryButton.Size = new System.Drawing.Size(112, 23);
+            this.imageDirectoryButton.TabIndex = 4;
+            this.imageDirectoryButton.Text = "Choose Folder";
+            this.imageDirectoryButton.UseVisualStyleBackColor = true;
+            this.imageDirectoryButton.Click += new System.EventHandler(this.ImageDirectoryButton_Click);
+            // 
+            // imageDirectoryLabel
+            // 
+            this.imageDirectoryLabel.AutoSize = true;
+            this.imageDirectoryLabel.Location = new System.Drawing.Point(130, 21);
+            this.imageDirectoryLabel.Name = "imageDirectoryLabel";
+            this.imageDirectoryLabel.Size = new System.Drawing.Size(125, 13);
+            this.imageDirectoryLabel.TabIndex = 5;
+            this.imageDirectoryLabel.Text = "No image folder chosen..";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(252, 105);
+            this.ClientSize = new System.Drawing.Size(542, 141);
+            this.Controls.Add(this.imageDirectoryLabel);
+            this.Controls.Add(this.imageDirectoryButton);
             this.Controls.Add(this.downloadProgressBar);
             this.Controls.Add(this.loadedCardsLabel);
             this.Controls.Add(this.downloadCardsButton);
@@ -95,6 +137,10 @@
         private System.Windows.Forms.Button downloadCardsButton;
         private System.Windows.Forms.Label loadedCardsLabel;
         private System.Windows.Forms.ProgressBar downloadProgressBar;
+        private System.ComponentModel.BackgroundWorker downloadBackgroundWorker;
+        private System.ComponentModel.BackgroundWorker parseBackgroundWorker;
+        private System.Windows.Forms.Button imageDirectoryButton;
+        private System.Windows.Forms.Label imageDirectoryLabel;
     }
 }
 

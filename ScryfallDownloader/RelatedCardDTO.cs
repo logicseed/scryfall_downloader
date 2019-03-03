@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace ScryfallJsonParser
+namespace ScryfallDownloader
 {
     // https://scryfall.com/docs/api/cards#related-card-objects
     public class RelatedCardDTO

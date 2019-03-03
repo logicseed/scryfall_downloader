@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ScryfallJsonParser
+namespace ScryfallDownloader
 {
     // https://scryfall.com/docs/api/cards
     public class CardDTO
