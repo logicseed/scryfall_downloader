@@ -163,16 +163,18 @@ namespace ScryfallDownloader
             // {Name} (O)(T) [{CollectorNumber}][{SetCode}].{ext}
 
             var safeName = card.Name;
+            var safeCollectorNumber = card.CollectorNumber;
             foreach (var c in Path.GetInvalidFileNameChars())
             {
                 safeName = safeName.Replace(c, '-');
+                safeCollectorNumber = safeCollectorNumber.Replace(c, '-');
             }
 
             var oversize = card.IsOversized ? "(O) " : "";
             var banned = card.IsBanned ? "[BANNED]" : "";
             var ext = card.HasHighresImage ? "png" : "jpg";
 
-            var fileName = $"{directory}\\{safeName} {oversize}[{card.SetCode.ToUpper()}][{card.CollectorNumber}]{banned}.{ext}";
+            var fileName = $"{directory}\\{safeName} {oversize}[{card.SetCode.ToUpper()}][{safeCollectorNumber}]{banned}.{ext}";
 
             var uri = card.HasHighresImage ? card.ImageUris["png"] : card.ImageUris["large"];
 
