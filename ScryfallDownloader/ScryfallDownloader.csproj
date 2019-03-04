@@ -53,6 +53,7 @@
     <Compile Include="CardDTO.cs" />
     <Compile Include="CardFace.cs" />
     <Compile Include="CardFaceDTO.cs" />
+    <Compile Include="ICard.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

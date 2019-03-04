@@ -37,10 +37,12 @@
             this.imageDirectoryButton = new System.Windows.Forms.Button();
             this.imageDirectoryLabel = new System.Windows.Forms.Label();
             this.cancelDownloadButton = new System.Windows.Forms.Button();
+            this.downloadedCardsLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // loadCardsButton
             // 
+            this.loadCardsButton.Enabled = false;
             this.loadCardsButton.Location = new System.Drawing.Point(12, 45);
             this.loadCardsButton.Name = "loadCardsButton";
             this.loadCardsButton.Size = new System.Drawing.Size(112, 23);
@@ -121,11 +123,21 @@
             this.cancelDownloadButton.UseVisualStyleBackColor = true;
             this.cancelDownloadButton.Click += new System.EventHandler(this.CancelDownloadButton_Click);
             // 
+            // downloadedCardsLabel
+            // 
+            this.downloadedCardsLabel.AutoSize = true;
+            this.downloadedCardsLabel.Location = new System.Drawing.Point(130, 80);
+            this.downloadedCardsLabel.Name = "downloadedCardsLabel";
+            this.downloadedCardsLabel.Size = new System.Drawing.Size(114, 13);
+            this.downloadedCardsLabel.TabIndex = 7;
+            this.downloadedCardsLabel.Text = "No cards downloaded.";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(542, 141);
+            this.Controls.Add(this.downloadedCardsLabel);
             this.Controls.Add(this.cancelDownloadButton);
             this.Controls.Add(this.imageDirectoryLabel);
             this.Controls.Add(this.imageDirectoryButton);
@@ -154,6 +166,7 @@
         private System.Windows.Forms.Button imageDirectoryButton;
         private System.Windows.Forms.Label imageDirectoryLabel;
         private System.Windows.Forms.Button cancelDownloadButton;
+        private System.Windows.Forms.Label downloadedCardsLabel;
     }
 }
 

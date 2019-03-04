@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -97,33 +99,32 @@ namespace ScryfallDownloader
         {
             foreach (var card in Cards)
             {
-                // Determine directory
-                // Does directory exist?
-                    // No
-                        // Create directory
+                var directory = TryCreateDirectory(card);
 
-                // Does it have faces?
-                    // Yes
-                        // For each face
-                            // Determine filename
-                            // Download image
-                    // No
-                        // Determine filename
-                        // Downlaod image
-                // Increment download count
-                // Report progress
-            }
+                if (card.ImageUris != null)
+                {
+                    DownloadCard(card, directory);
+                }
+                else
+                {
+                    foreach (var face in card.CardFaces)
+                    {
+                        DownloadCard(face, directory);
+                    }
+                }
 
-            for (int i = 0; i < 100; i++)
-            {
+                DownloadCount++;
+                var progress = (DownloadCount / (float)Cards.Count) * 100;
+                downloadBackgroundWorker.ReportProgress((int)progress);
+
                 if (downloadBackgroundWorker.CancellationPending) break;
-                Thread.Sleep(500);
-                downloadBackgroundWorker.ReportProgress(i);
+                Thread.Sleep(5);
             }
         }
 
         private void DownloadBackgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
+            downloadedCardsLabel.Text = $"{DownloadCount} / {Cards.Count} cards downloaded..";
             downloadProgressBar.Value = e.ProgressPercentage;
         }
 
@@ -137,6 +138,49 @@ namespace ScryfallDownloader
             else
             {
                 MessageBox.Show("Your image download is complete.", "Download Complete", MessageBoxButtons.OK);
+            }
+        }
+
+        private string TryCreateDirectory(Card card)
+        {
+            // {SetName} [{SetCode}][YYYY-MM]
+
+            var safeSetName = card.SetName;
+            foreach (var c in Path.GetInvalidFileNameChars())
+            {
+                safeSetName = safeSetName.Replace(c, '-');
+            }
+
+            var directoryName = $"{ImageDirectory}\\{safeSetName} [{card.SetCode.ToUpper()}][{card.ReleaseDate:yyyy-MM}]";
+            Directory.CreateDirectory(directoryName);
+
+            return directoryName;
+        }
+
+        private void DownloadCard(ICard card, string directory)
+        {
+            // {Name} (O)(T) [{CollectorNumber}][{SetCode}].{ext}
+
+            var safeName = card.Name;
+            foreach (var c in Path.GetInvalidFileNameChars())
+            {
+                safeName = safeName.Replace(c, '-');
+            }
+
+            var oversize = card.IsOversized ? "(O) " : "";
+            var banned = card.IsBanned ? "[BANNED]" : "";
+            var ext = card.HasHighresImage ? "png" : "jpg";
+
+            var fileName = $"{directory}\\{safeName} {oversize}[{card.SetCode.ToUpper()}][{card.CollectorNumber}]{banned}.{ext}";
+
+            var uri = card.HasHighresImage ? card.ImageUris["png"] : card.ImageUris["large"];
+
+            if (!File.Exists(fileName))
+            {
+                using (var webClient = new WebClient())
+                {
+                    webClient.DownloadFile(uri, fileName);
+                }
             }
         }
     }
