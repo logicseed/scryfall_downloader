@@ -97,6 +97,7 @@ namespace ScryfallDownloader
 
         private void DownloadBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
+            DownloadCount = 0;
             foreach (var card in Cards)
             {
                 var directory = TryCreateDirectory(card);
