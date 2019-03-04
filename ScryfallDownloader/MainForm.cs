@@ -152,7 +152,8 @@ namespace ScryfallDownloader
                 safeSetName = safeSetName.Replace(c, '-');
             }
 
-            var directoryName = $"{ImageDirectory}\\{safeSetName} [{card.SetCode.ToUpper()}][{card.ReleaseDate:yyyy-MM}]";
+            //var directoryName = $"{ImageDirectory}\\{safeSetName} [{card.SetCode.ToUpper()}][{card.ReleaseDate:yyyy-MM}]";
+            var directoryName = $"{ImageDirectory}\\{safeSetName} [{card.SetCode.ToUpper()}]";
             Directory.CreateDirectory(directoryName);
 
             return directoryName;
@@ -171,10 +172,10 @@ namespace ScryfallDownloader
             }
 
             var oversize = card.IsOversized ? "(O) " : "";
-            var banned = card.IsBanned ? "[BANNED]" : "";
+            var banned = card.IsBanned ? " [BANNED]" : "";
             var ext = card.HasHighresImage ? "png" : "jpg";
 
-            var fileName = $"{directory}\\{safeName} {oversize}[{card.SetCode.ToUpper()}][{safeCollectorNumber}]{banned}.{ext}";
+            var fileName = $"{directory}\\{safeName} {oversize}[{card.SetCode.ToUpper()}] [{safeCollectorNumber}]{banned}.{ext}";
 
             var uri = card.HasHighresImage ? card.ImageUris["png"] : card.ImageUris["large"];
 
